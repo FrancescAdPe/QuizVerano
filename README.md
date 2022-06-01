@@ -38,7 +38,6 @@
 ## 4 (avanzado) - APIs HTML5
 - Almacenar la puntuación de cada partida en un array de objetos [{..},{..},{..}...{..}] en Local Storage. 
 - Guardar puntuación y fecha en cada objeto del array
-
-Mostrar en la Home con una gráfica los resultados de las últimas partidas jugadas (leer puntuaciones de LocalStorage). Representar Fecha(eje X) vs Puntuación(eje Y)
+- Mostrar en la Home con una gráfica los resultados de las últimas partidas jugadas (leer puntuaciones de LocalStorage). - Representar Fecha(eje X) vs Puntuación(eje Y)
 
 
