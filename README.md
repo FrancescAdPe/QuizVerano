@@ -1,4 +1,6 @@
-# QuizVerano
+# QuizVerano 
+### [Borja](https://github.com/btt08), [Francesc](https://github.com/FrancescAdPe), [Héctor](https://github.com/hfjosa2022)
+#
 ![Ruleta colores](/spinning-wheel-color.jpg)
 
 ## Presentación
