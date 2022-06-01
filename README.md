@@ -10,7 +10,7 @@
 ## Requisitos
 - Manipulación dinámica del DOM
 - Crear una página SPA para las preguntas
-Manejo de ES6
+- Manejo de ES6
 - Asincronía. Usar API de preguntas https://opentdb.com/
 - APIs HTML5: Uso de Local storage y gráficas, etc...
 - Sin frameworks ni librerias externas en la medida de lo posible
@@ -23,18 +23,19 @@ Manejo de ES6
 
 # Fases
 
-## FASE 1: Diseño del front
-Diseño responsive, mobile first, semántica HTML5
+## 1: Diseño del front
+- Diseño responsive, mobile first, semántica HTML5
 
-## FASE 2: Lógica de JavaScript
-Adaptar nuestra app acorde a lo que vimos en clase
-Conseguir con 10 preguntas nuestras, guardadas en un array de objetos, se pueda jugar a nuestro Quiz. [{..},{..},{..}...{..}]
+## 2: Lógica de JavaScript
+- Adaptar nuestra app acorde a lo que vimos en clase
+- Conseguir con 10 preguntas nuestras, guardadas en un array de objetos, se pueda jugar a nuestro Quiz. [{..},{..},{..}...{..}]
 
-## FASE 3: Asincronía
-Javascript: Manejo de asincronía. Leer 10 preguntas random de la API de prenguntas para generar el Quiz
+## 3: Asincronía
+- Javascript: Manejo de asincronía. Leer 10 preguntas random de la API de prenguntas para generar el Quiz
 
-## FASE 4 (avanzado) - APIs HTML5
-Almacenar la puntuación de cada partida en un array de objetos [{..},{..},{..}...{..}] en Local Storage. Guardar puntuación y fecha en cada objeto del array
+## 4 (avanzado) - APIs HTML5
+- Almacenar la puntuación de cada partida en un array de objetos [{..},{..},{..}...{..}] en Local Storage. 
+- Guardar puntuación y fecha en cada objeto del array
 
 Mostrar en la Home con una gráfica los resultados de las últimas partidas jugadas (leer puntuaciones de LocalStorage). Representar Fecha(eje X) vs Puntuación(eje Y)
 
