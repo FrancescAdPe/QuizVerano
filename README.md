@@ -20,3 +20,7 @@ Manejo de ES6
 ## Opcional
 - Otras APIs, mix de preguntas de distinas fuentes...
 - En general, cualquier extra será bien recibido para que investiguéis por vuestra cuenta, siempre y cuando tenga sentido
+
+# Fases
+
+
