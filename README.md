@@ -1,5 +1,5 @@
 # QuizVerano
-
+![Ruleta colores](/spinning-wheel.jpg)
 
 ## Presentación
 
