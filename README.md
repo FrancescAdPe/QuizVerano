@@ -1,8 +1,6 @@
 # QuizVerano 
 ### [Borja](https://github.com/btt08), [Francesc](https://github.com/FrancescAdPe), [Héctor](https://github.com/hfjosa2022)
 #
-![Ruleta colores](https://github.com/FrancescAdPe/QuizVerano/blob/main/img/spinning-wheel-color.jpg)
-
 ## Presentación
 
 - El Quiz constará de 10 preguntas. Cada pregunta tendrá 4 opciones y sólo una de ellas será la correcta.
