@@ -8,11 +8,17 @@
           content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet"
           href="./css/style.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+          integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer" />
     <script defer
             src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
             </script>
     <script defer
-            src="./js/main.js"></script>
+            src="./js/main.js"
+            type="module"></script>
     <title>Quiz de verano</title>
   </head>
   <body>
@@ -25,12 +31,30 @@
           <section id="welcome-section"
                    class="card">
             <h3>
-              Welcome to the quiz
+              Bienvenido al quiz
             </h3>
             <button id="btnStart"
                     class="btn">
-              Take the quiz
+              Al azar <i class="fa-solid fa-dice"></i>
             </button>
+            <div class="categories">
+              <button id="btnStartCloud"
+                      class="btn">
+                Firebase <i class="fa-solid fa-cloud"></i>
+              </button>
+              <button id="btnStartSports"
+                      class="btn">
+                Deportes <i class="fa-solid fa-futbol"></i>
+              </button>
+              <button id="btnStartAnimals"
+                      class="btn">
+                Animales <i class="fa-solid fa-paw"></i>
+              </button>
+              <button id="btnStartGeneral"
+                      class="btn">
+                Cultura general <i class="fa-solid fa-earth-americas"></i>
+              </button>
+            </div>
           </section>
           <section id="graph-section"
                    class="card">

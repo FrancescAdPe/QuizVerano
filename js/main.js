@@ -1,20 +1,26 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
+import { getDatabase, ref, onValue, get } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js';
+
 const NUM_QUESTIONS = 10;
 const DIFFICULTY = 'easy';
-const CATEGORY = '';
 const TIME_DELAY = 1000;
 let score = 0;
 
 const contentAnswers = [...document.querySelectorAll('.answer')];
 
-document.getElementById('btnStart').addEventListener('click', startQuiz);
+document.getElementById('btnStart').addEventListener('click', e => startQuiz('', false));
+document.getElementById('btnStartCloud').addEventListener('click', e => startQuiz('', true));
+document.getElementById('btnStartGeneral').addEventListener('click', e => startQuiz(9, false));
+document.getElementById('btnStartSports').addEventListener('click', e => startQuiz(21, false));
+document.getElementById('btnStartAnimals').addEventListener('click', e => startQuiz(27, false));
+
 document.getElementById('btnGoHomepage').addEventListener('click', () => window.location.reload());
 
 createChart();
 
-async function startQuiz() {
+async function startQuiz(cat, cloud) {
   document.getElementById('homepage').style.display = 'none';
-
-  const arrQuestions = await getQuestions();
+  const arrQuestions = await (cloud ? getCloudQuestions() : getQuestions(cat));
 
   contentAnswers.forEach(
     (answer) => answer.addEventListener('click', (e) => treatAnswer(e, arrQuestions)));
@@ -97,13 +103,38 @@ function writeToLS() {
   localStorage.setItem('scores', JSON.stringify(storedData));
 }
 
-async function getQuestions() {
+async function getQuestions(cat) {
   const baseUrl = 'https://opentdb.com/api.php';
-  const fetchUrl = `${baseUrl}?amount=${NUM_QUESTIONS}&category=${CATEGORY}&difficulty=${DIFFICULTY}`;
+  const fetchUrl = `${baseUrl}?amount=${NUM_QUESTIONS}&category=${cat}&difficulty=${DIFFICULTY}`;
   try {
     const response = await fetch(fetchUrl + '&type=multiple');
     const data = await response.json();
     return data.results;
+  } catch (error) {
+    console.error(error);
+    alert('Ha habido un problema conectando con la base de datos.');
+    window.location.reload();
+  }
+}
+
+async function getCloudQuestions() {
+  const firebaseConfig = {
+    apiKey: "AIzaSyBoge9h2RF4dv-pGKdWw22DCZZuxwaciZQ",
+    authDomain: "quiz-4502a.firebaseapp.com",
+    databaseURL: "https://quiz-4502a-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "quiz-4502a",
+    storageBucket: "quiz-4502a.appspot.com",
+    messagingSenderId: "574674803141",
+    appId: "1:574674803141:web:31fc94b601db44dc8213ac",
+    measurementId: "G-S8Y1M92JHS"
+  };
+  // Initialize Firebase
+  try {
+    const database = getDatabase(initializeApp(firebaseConfig));
+    const snapshot = await get(ref(database, 'results'));
+
+    return shuffle(snapshot.val());
+
   } catch (error) {
     console.error(error);
     alert('Ha habido un problema conectando con la base de datos.');
