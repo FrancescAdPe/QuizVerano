@@ -68,16 +68,27 @@ function treatAnswer(e, arrQuestions) {
   }, TIME_DELAY);
 }
 
+// function colourAnswers(elemClickedAnswer, strCorrectAnswer) {
+//   contentAnswers.forEach(answer => {
+//     answer.disabled = true;
+//     const clase = strCorrectAnswer ? 'correct' : 'wrong';
+//     answer.classList.add('grayout');
+//     answer.classList.add(clase);
+//     // if (answer.innerText === strCorrectAnswer) {
+//     //   answer.classList.add('correct');
+//     // } else if (answer === elemClickedAnswer) {
+//     //   answer.classList.add('wrong');
+//     // } else {
+//     //   answer.classList.add('grayout');
+//     // }
+//   });
+// }
+
 function colourAnswers(elemClickedAnswer, strCorrectAnswer) {
   contentAnswers.forEach(answer => {
     answer.disabled = true;
-    if (answer.innerText === strCorrectAnswer) {
-      answer.classList.add('correct');
-    } else if (answer === elemClickedAnswer) {
-      answer.classList.add('wrong');
-    } else {
-      answer.classList.add('grayout');
-    }
+    const type = (answer.innerText === strCorrectAnswer) ? 'correct' : answer === elemClickedAnswer ? 'wrong' : 'grayout';
+    answer.classList.add(type);
   });
 }
 
