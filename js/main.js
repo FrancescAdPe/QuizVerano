@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
-import { getDatabase, ref, onValue, get } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js';
+import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js';
 
 const NUM_QUESTIONS = 10;
 const DIFFICULTY = 'easy';
@@ -68,22 +68,6 @@ function treatAnswer(e, arrQuestions) {
   }, TIME_DELAY);
 }
 
-// function colourAnswers(elemClickedAnswer, strCorrectAnswer) {
-//   contentAnswers.forEach(answer => {
-//     answer.disabled = true;
-//     const clase = strCorrectAnswer ? 'correct' : 'wrong';
-//     answer.classList.add('grayout');
-//     answer.classList.add(clase);
-//     // if (answer.innerText === strCorrectAnswer) {
-//     //   answer.classList.add('correct');
-//     // } else if (answer === elemClickedAnswer) {
-//     //   answer.classList.add('wrong');
-//     // } else {
-//     //   answer.classList.add('grayout');
-//     // }
-//   });
-// }
-
 function colourAnswers(elemClickedAnswer, strCorrectAnswer) {
   contentAnswers.forEach(answer => {
     answer.disabled = true;
@@ -139,7 +123,7 @@ async function getCloudQuestions() {
     appId: "1:574674803141:web:31fc94b601db44dc8213ac",
     measurementId: "G-S8Y1M92JHS"
   };
-  // Initialize Firebase
+
   try {
     const database = getDatabase(initializeApp(firebaseConfig));
     const snapshot = await get(ref(database, 'results'));
