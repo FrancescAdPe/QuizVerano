@@ -25,8 +25,58 @@
     <div class="wrapper">
       <header id="header-main">
         <h1>Quiz</h1>
+        <i class="fa-solid fa-right-from-bracket"></i>
       </header>
       <main id="main-content">
+        <div id="login"
+             class="card">
+          <form id="formLogin">
+            <!-- <label for="mail">Email</label> -->
+            <input type="email"
+                   placeholder="Email"
+                   name="mail"
+                   id="mail"
+                   autofocus>
+            <!-- <label for="pwd">Password</label> -->
+            <input type="password"
+                   placeholder="Password"
+                   name="pwd"
+                   id="pwd">
+            <div class="btns">
+              <button id="btnSubmitLogIn"
+                      class="btn">Log in</button>
+              <button id="btnSignUp"
+                      class="btn">Sign Up</>
+            </div>
+          </form>
+        </div>
+        <div id="signUp"
+             class="card">
+          <form id="formSignUp">
+            <!-- <label for="userName">Username</label> -->
+            <input type="text"
+                   placeholder="Username"
+                   id="userName">
+            <!-- <label for="mailSignUp">Email</label> -->
+            <input type="email"
+                   placeholder="Email"
+                   id="mailSignUp">
+            <!-- <label for="pwd1">Password</label> -->
+            <input type="password"
+                   placeholder="Password"
+                   id="pwd1">
+            <!-- <label for="pwd2">Repetir password</label> -->
+            <input type="password"
+                   placeholder="Repetir password"
+                   id="pwd2">
+            <div class="btns">
+              <button id="btnSubmitSignUp"
+                      class="btn">Sign Up</button>
+              <button id="btnBackSignUp"
+                      class="btn">Ir atrás</button>
+            </div>
+          </form>
+        </div>
         <div id="homepage">
           <section id="welcome-section"
                    class="card">
@@ -52,7 +102,7 @@
               </button>
               <button id="btnStartGeneral"
                       class="btn">
-                Cultura general <i class="fa-solid fa-earth-americas"></i>
+                General <i class="fa-solid fa-earth-americas"></i>
               </button>
             </div>
           </section>

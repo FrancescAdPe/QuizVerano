@@ -1,22 +1,108 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.8.2/firebase-app.js";
-import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js';
+import { getDatabase, ref, get, set } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-database.js';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'https://www.gstatic.com/firebasejs/9.8.2/firebase-auth.js';
+
+window.addEventListener('load', events);
 
 const NUM_QUESTIONS = 10;
 const DIFFICULTY = 'easy';
 const TIME_DELAY = 1000;
 let score = 0;
 
+const firebaseConfig = {
+  apiKey: "AIzaSyBoge9h2RF4dv-pGKdWw22DCZZuxwaciZQ",
+  authDomain: "quiz-4502a.firebaseapp.com",
+  databaseURL: "https://quiz-4502a-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "quiz-4502a",
+  storageBucket: "quiz-4502a.appspot.com",
+  messagingSenderId: "574674803141",
+  appId: "1:574674803141:web:31fc94b601db44dc8213ac",
+  measurementId: "G-S8Y1M92JHS"
+};
+
 const contentAnswers = [...document.querySelectorAll('.answer')];
 
-document.getElementById('btnStart').addEventListener('click', e => startQuiz('', false));
-document.getElementById('btnStartCloud').addEventListener('click', e => startQuiz('', true));
-document.getElementById('btnStartGeneral').addEventListener('click', e => startQuiz(9, false));
-document.getElementById('btnStartSports').addEventListener('click', e => startQuiz(21, false));
-document.getElementById('btnStartAnimals').addEventListener('click', e => startQuiz(27, false));
-
-document.getElementById('btnGoHomepage').addEventListener('click', () => window.location.reload());
-
 createChart();
+
+function events() {
+  document.getElementById('formLogin').addEventListener('submit', (e) => e.preventDefault());
+  document.getElementById('formSignUp').addEventListener('submit', (e) => e.preventDefault());
+
+  document.querySelector('#header-main > i').addEventListener('click', () => {
+    window.confirm('¿Seguro que desea salir?') ? reload() : '';
+  })
+
+  document.getElementById('btnSubmitLogIn').addEventListener('click', loginUser);
+  document.getElementById('btnSubmitSignUp').addEventListener('click', signUpUser);
+  document.getElementById('btnSignUp').addEventListener('click', () => goTo('signUp', 'flex'));
+  document.getElementById('btnStart').addEventListener('click', e => startQuiz('', false));
+  document.getElementById('btnStartCloud').addEventListener('click', e => startQuiz('', true));
+  document.getElementById('btnStartGeneral').addEventListener('click', e => startQuiz(9, false));
+  document.getElementById('btnStartSports').addEventListener('click', e => startQuiz(21, false));
+  document.getElementById('btnStartAnimals').addEventListener('click', e => startQuiz(27, false));
+
+  document.getElementById('btnGoHomepage').addEventListener('click', () => goTo('homepage', 'block'));
+  document.getElementById('btnBackSignUp').addEventListener('click', reload);
+}
+
+function loginUser(e) {
+  e.preventDefault();
+  const auth = getAuth(initializeApp(firebaseConfig));
+  const email = document.getElementById('mail').value;
+  const pass = document.getElementById('pwd').value;
+  //funcion para loguearse
+  signInWithEmailAndPassword(auth, email, pass)
+    .then(async response => {
+      //si login ha ido correctamente
+      document.getElementById('login').style.display = 'none';
+      document.querySelector('#header-main > i').style.display = 'block';
+      document.getElementById('homepage').style.display = 'block';
+      const userName = await getUserData(response.user.uid);
+      document.querySelector('#welcome-section > h3').textContent = `Bienvenido ${userName}`;
+    })
+    .catch(error => alert(error.code, error.message));
+}
+
+function signUpUser(e) {
+  e.preventDefault();
+
+  const form = document.getElementById('formSignUp');
+  const userName = form.userName.value;
+  const email = form.mailSignUp.value;
+  const pass = form.pwd1.value;
+  const pass2 = form.pwd2.value;
+
+  const userData = {
+    userName,
+    email,
+    pass
+  };
+
+  const auth = getAuth(initializeApp(firebaseConfig));
+
+  if (pass !== '' && pass2 !== '' && pass === pass2) {
+    createUserWithEmailAndPassword(auth, email, pass)
+      .then(response => {
+        userData.uid = response.user.uid;
+        createUserDB(userData);
+        alert('Usuario creado correctamente');
+        setTimeout(() => goTo('login', 'flex'), 500);
+      })
+      .catch(error => alert(error.code, error.message));
+  } else {
+    alert('las contraseñas no coinciden')
+  }
+}
+
+function createUserDB(userData) {
+  try {
+    const database = getDatabase(initializeApp(firebaseConfig));
+    // console.log(userData);
+    set(ref(database, 'users/' + userData.uid), userData);
+  } catch (error) {
+    alert(error.code, error.message);
+  }
+}
 
 async function startQuiz(cat, cloud) {
   document.getElementById('homepage').style.display = 'none';
@@ -59,6 +145,7 @@ function treatAnswer(e, arrQuestions) {
       decolourAnswers();
       nextQuestion(arrQuestions);
     } else {
+      decolourAnswers();
       document.getElementById('quiz').style.display = 'none';
       document.querySelector('.score').innerHTML = `<sup>${score}</sup>/<sub>${NUM_QUESTIONS}</sub>`;
       writeToLS();
@@ -113,29 +200,35 @@ async function getQuestions(cat) {
 }
 
 async function getCloudQuestions() {
-  const firebaseConfig = {
-    apiKey: "AIzaSyBoge9h2RF4dv-pGKdWw22DCZZuxwaciZQ",
-    authDomain: "quiz-4502a.firebaseapp.com",
-    databaseURL: "https://quiz-4502a-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "quiz-4502a",
-    storageBucket: "quiz-4502a.appspot.com",
-    messagingSenderId: "574674803141",
-    appId: "1:574674803141:web:31fc94b601db44dc8213ac",
-    measurementId: "G-S8Y1M92JHS"
-  };
-
   try {
     const database = getDatabase(initializeApp(firebaseConfig));
     const snapshot = await get(ref(database, 'results'));
 
     return shuffle(snapshot.val());
-
   } catch (error) {
     console.error(error);
     alert('Ha habido un problema conectando con la base de datos.');
-    window.location.reload();
+    reload();
   }
 }
+
+async function getUserData(userID) {
+  const database = getDatabase(initializeApp(firebaseConfig));
+  const snapshot = await get(ref(database, 'users/' + userID));
+  return snapshot.val().userName;
+}
+
+function goTo(destination, style) {
+  document.getElementById('login').style.display = 'none';
+  document.getElementById('signUp').style.display = 'none';
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('results').style.display = 'none';
+  document.getElementById('homepage').style.display = 'none';
+
+  document.getElementById(destination).style.display = style;
+}
+
+function reload() { window.location.reload(); }
 
 /* Fisher–Yates shuffle algorithm */
 function shuffle(arr) {
